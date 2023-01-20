@@ -32,6 +32,7 @@ PlayerLastStatsQuery = gql(
         id
         slug
         positions
+        isActive
         team{
           name
         }
@@ -113,10 +114,12 @@ for players_slugs_list in splitted_players_slugs_list:
     lastThreeScores = calculateAverageScore(player["latestThreeScores"])
     lastFiveScores = calculateAverageScore(player["latestFiveScores"])
 
-    nbaPlayerStats = NbaPlayer(player["slug"], player["team"]["name"], lastThreeScores, lastFiveScores, player["tenGameAverage"])
+    nbaPlayerStats = NbaPlayer(player["slug"], player["team"]["name"], player["isActive"], lastThreeScores, lastFiveScores, player["tenGameAverage"])
     nbaPlayersStatsList.append(nbaPlayerStats)
 
-df_players_stats = pd.DataFrame(sorted(nbaPlayersStatsList, reverse=True))
+active_nba_players_stats_list = filter(lambda player: player.isActive, nbaPlayersStatsList)
+
+df_players_stats = pd.DataFrame(sorted(active_nba_players_stats_list, reverse=True))
 pd.set_option('display.max_rows', None)
 print(df_players_stats.rename(columns={'slug': 'Player', 'team': 'Team', 'latestThreeFixtureStats': 'L3', 'latestFiveFixtureStats': 'L5', 'tenGameAverage': 'L10', 'latestThreeFixtureStatsDiff': 'L3 Diff', 'latestFiveFixtureStatsDiff': 'L5 Diff'}))
 

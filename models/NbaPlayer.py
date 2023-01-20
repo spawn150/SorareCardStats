@@ -6,15 +6,17 @@ from functools import total_ordering
 class NbaPlayer:
     slug: str
     team: str
+    isActive: bool
     latestThreeFixtureStats: int
     latestFiveFixtureStats: int
     tenGameAverage: int
     latestThreeFixtureStatsDiff: int
     latestFiveFixtureStatsDiff: int
 
-    def __init__(self, slug: str, team: str, latestThreeFixtureStats: int, latestFiveFixturesStats: int, tenGameAverage: int):
+    def __init__(self, slug: str, team: str, isActive: bool, latestThreeFixtureStats: int, latestFiveFixturesStats: int, tenGameAverage: int):
         self.slug = slug
         self.team = team
+        self.isActive = isActive
         self.latestThreeFixtureStats = latestThreeFixtureStats
         self.latestFiveFixtureStats = latestFiveFixturesStats
         self.tenGameAverage = tenGameAverage

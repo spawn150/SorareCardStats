@@ -111,11 +111,7 @@ NBA_PLAYERS_NAME_OWNED = [
     "Payton Pritchard",
     "Max Christie",
     "Anthony Gill",
-    "Udoka Azubuike"
+    "Udoka Azubuike",
+    "Grayson Allen",
+    "Buddy Hield"
 ]
-
-""" 
-    ,
-    
-
-"""
