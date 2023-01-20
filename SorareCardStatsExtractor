@@ -1,0 +1,123 @@
+# import requests
+import xlsxwriter
+from gql import gql, Client
+from gql.transport.aiohttp import AIOHTTPTransport
+import json
+from types import SimpleNamespace
+import pandas as pd
+import time
+from config.const import NBA_TEAMS_SLUGS, NBA_PLAYERS_NAME_OWNED
+from models.NbaPlayer import NbaPlayer
+import numpy as np
+
+TeamPlayersQuery = gql(
+    """
+  query GetNbaTeamSlugs($team: String!){
+    nbaTeam(slug: $team){
+      id
+      players{
+        slug
+        displayName
+      }
+    }
+  }
+"""
+)
+
+#add 1 game more because it considers also next game with score 0
+PlayerLastStatsQuery = gql(
+    """
+    query GetNbaPlayerLastStats($players: [String!]){
+      nbaPlayers(slugs: $players) {
+        id
+        slug
+        positions
+        team{
+          name
+        }
+        latestThreeScores: latestFinalFixtureStats(last: 4){
+          score
+        }
+        latestFiveScores: latestFinalFixtureStats(last: 6){
+          score
+        }
+        tenGameAverage
+      }
+    }
+  """
+)
+
+def calculateAverageScore(lastScoresList : list) -> int :
+
+  #print("analyzing num of games: ", len(lastScoresList))
+
+  lastPlayedGames = 0
+  totalPlayedGamesScore = 0
+  for scoreJson in lastScoresList:
+    score = scoreJson["score"]
+    if score > 0:
+      lastPlayedGames += 1
+      totalPlayedGamesScore += score
+
+  #print("total games played: ", lastPlayedGames, " - total games scores: ", totalPlayedGamesScore)
+
+  lastGamesPlayedScore = 0
+  if lastPlayedGames > 0:
+    lastGamesPlayedScore = totalPlayedGamesScore / lastPlayedGames
+
+  return int(lastGamesPlayedScore)
+
+
+###################################
+# Script start
+###################################
+
+# api_sorare_football_base_url = "https://api.sorare.com/graphql"
+api_sorare_sports_base_url = "https://api.sorare.com/sports/graphql"
+
+transport = AIOHTTPTransport(url=api_sorare_sports_base_url)
+client = Client(transport=transport, fetch_schema_from_transport=True)
+
+print(f"\n\n Elaborating statistics for {len(NBA_PLAYERS_NAME_OWNED)} players...\n\n")
+
+players_slugs = []
+for team in NBA_TEAMS_SLUGS:
+    # delay due to API calls limit
+    time.sleep(3)
+
+    print("Getting info for team...", team)
+
+    result = client.execute(TeamPlayersQuery, variable_values={
+                            "team": team}, get_execution_result=True)
+
+    # Getting team player's slug by player's name owned
+    team_players = result.data["nbaTeam"]["players"]
+    for player in team_players:
+        if player["displayName"] in NBA_PLAYERS_NAME_OWNED:
+            player_slug = player["slug"]
+            players_slugs.append(player_slug)
+
+print(f"\n\n Found {len(players_slugs)} player's slugs!\n\n")
+
+#splitting list in many lists of 19 elements max due to limit into 'nbaPlayers' graphql api
+chunked_players_slugs_array = np.array_split(players_slugs, (int(len(players_slugs) / 19)+1))
+splitted_players_slugs_list = [list(array) for array in chunked_players_slugs_array]
+
+nbaPlayersStatsList = []
+for players_slugs_list in splitted_players_slugs_list:
+
+  result = client.execute(PlayerLastStatsQuery, variable_values={"players": players_slugs_list}, get_execution_result=True)
+  ownedPlayers = result.data["nbaPlayers"]
+  for player in ownedPlayers:
+
+    lastThreeScores = calculateAverageScore(player["latestThreeScores"])
+    lastFiveScores = calculateAverageScore(player["latestFiveScores"])
+
+    nbaPlayerStats = NbaPlayer(player["slug"], player["team"]["name"], lastThreeScores, lastFiveScores, player["tenGameAverage"])
+    nbaPlayersStatsList.append(nbaPlayerStats)
+
+df_players_stats = pd.DataFrame(sorted(nbaPlayersStatsList, reverse=True))
+pd.set_option('display.max_rows', None)
+print(df_players_stats.rename(columns={'slug': 'Player', 'team': 'Team', 'latestThreeFixtureStats': 'L3', 'latestFiveFixtureStats': 'L5', 'tenGameAverage': 'L10', 'latestThreeFixtureStatsDiff': 'L3 Diff', 'latestFiveFixtureStatsDiff': 'L5 Diff'}))
+
+print(f"\n\n...done!\n\n")
