@@ -40,7 +40,7 @@ NBA_PLAYERS_NAME_OWNED = [
     "Lauri Markkanen",
     "Damian Lillard",
     "Domantas Sabonis",
-    "Nikola Vucevic",
+    "Nikola Vučević",
     "Shai Gilgeous-Alexander",
     "Trae Young",
     "Ja Morant",
