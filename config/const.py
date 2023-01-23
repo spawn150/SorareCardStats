@@ -73,7 +73,7 @@ NBA_PLAYERS_NAME_OWNED = [
     "Tyus Jones",
     "Landry Shamet",
     "Saddiq Bey",
-    "Tim Hardaway Jr.",
+    "Tobias Harris",
     "Al Horford",
     "Jalen Duren",
     "Jarred Vanderbilt",
@@ -113,5 +113,6 @@ NBA_PLAYERS_NAME_OWNED = [
     "Anthony Gill",
     "Udoka Azubuike",
     "Grayson Allen",
-    "Buddy Hield"
+    "Buddy Hield",
+    "Evan Mobley"
 ]
