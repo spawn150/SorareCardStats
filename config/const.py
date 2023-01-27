@@ -102,7 +102,7 @@ NBA_PLAYERS_NAME_OWNED = [
     "Thaddeus Young",
     "Devonte' Graham",
     "Dewayne Dedmon",
-    "Evan Fournier",
+    "Montrezl Harrell",
     "Terence Davis",
     "Jericho Sims",
     "Paul Reed",
