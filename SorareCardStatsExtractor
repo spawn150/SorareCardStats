@@ -85,7 +85,7 @@ for players_slugs_list in splitted_players_slugs_list:
     nbaPlayerStats = NbaPlayer(player["slug"], player["team"]["name"], player["isActive"], lastScores[0], lastScores[1], player["tenGameAverage"])
     nbaPlayersStatsList.append(nbaPlayerStats)
 
-active_nba_players_stats_list = nbaPlayersStatsList#filter(lambda nbaPlayer: nbaPlayer.isActive, nbaPlayersStatsList)
+active_nba_players_stats_list = filter(lambda nbaPlayer: nbaPlayer.isActive, nbaPlayersStatsList)
 
 df_players_stats = pd.DataFrame(sorted(active_nba_players_stats_list, reverse=True))
 pd.set_option('display.max_rows', None)
