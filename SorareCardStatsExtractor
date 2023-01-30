@@ -35,7 +35,15 @@ def calculateAverageScore(lastScoresList : list) -> tuple :
   lastThreeFixtureAnalyzed = fixtureStatsCounter if fixtureStatsCounter < 3 else 3
   lastFiveFixtureAnalyzed = fixtureStatsCounter if fixtureStatsCounter < 5 else 5
 
-  return (round(totalLastThreeScores / lastThreeFixtureAnalyzed), round(totalLastFiveScores / lastFiveFixtureAnalyzed))
+  lastThreeScoresAverage = 0
+  if lastThreeFixtureAnalyzed > 0 : 
+    lastThreeScoresAverage = round(totalLastThreeScores / lastThreeFixtureAnalyzed) 
+  
+  lastFiveScoresAverage = 0
+  if lastFiveFixtureAnalyzed > 0 : 
+    lastFiveScoresAverage = round(totalLastFiveScores / lastFiveFixtureAnalyzed)
+
+  return (lastThreeScoresAverage, lastFiveScoresAverage)
 
 
 ###################################
