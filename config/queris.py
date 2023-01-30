@@ -14,7 +14,6 @@ TeamPlayersQuery = gql(
 """
 )
 
-#add 1 game more because it considers also next game with score 0
 PlayerLastStatsQuery = gql(
     """
     query GetNbaPlayerLastStats($players: [String!]){
@@ -26,11 +25,11 @@ PlayerLastStatsQuery = gql(
         team{
           name
         }
-        latestThreeScores: latestFinalFixtureStats(last: 4){
+        latestFinalFixtureStats(last: 15){
           score
-        }
-        latestFiveScores: latestFinalFixtureStats(last: 6){
-          score
+          fixture {
+            fixtureState
+          }
         }
         tenGameAverage
       }

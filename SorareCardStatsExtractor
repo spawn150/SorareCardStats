@@ -11,25 +11,31 @@ from models.NbaPlayer import NbaPlayer
 import numpy as np
 from config.queris import TeamPlayersQuery, PlayerLastStatsQuery
 
-def calculateAverageScore(lastScoresList : list) -> int :
+def calculateAverageScore(lastScoresList : list) -> tuple :
 
   #print("analyzing num of games: ", len(lastScoresList))
 
-  lastPlayedGames = 0
-  totalPlayedGamesScore = 0
-  for scoreJson in lastScoresList:
-    score = scoreJson["score"]
-    if score > 0:
-      lastPlayedGames += 1
-      totalPlayedGamesScore += score
+  filterdScoresList = list(filter(lambda lastScore: (lastScore["fixture"]["fixtureState"] != "opened" and lastScore["score"] > 0), lastScoresList))
 
-  #print("total games played: ", lastPlayedGames, " - total games scores: ", totalPlayedGamesScore)
+  totalLastThreeScores = 0
+  totalLastFiveScores = 0
+  fixtureStatsCounter = 0
+  for fixtureStats in filterdScoresList:
+    
+    if fixtureStatsCounter >= 5 : break
 
-  lastGamesPlayedScore = 0
-  if lastPlayedGames > 0:
-    lastGamesPlayedScore = totalPlayedGamesScore / lastPlayedGames
+    score = fixtureStats["score"]
+    if fixtureStatsCounter < 3:
+      totalLastThreeScores += score
+    totalLastFiveScores += score
+    fixtureStatsCounter += 1
 
-  return int(lastGamesPlayedScore)
+  print("total games analyzed: ", len(filterdScoresList), " - last 3 scores: ", totalLastThreeScores, " - last 5 scores: ", totalLastFiveScores)
+
+  lastThreeFixtureAnalyzed = fixtureStatsCounter if fixtureStatsCounter < 3 else 3
+  lastFiveFixtureAnalyzed = fixtureStatsCounter if fixtureStatsCounter < 5 else 5
+
+  return (round(totalLastThreeScores / lastThreeFixtureAnalyzed), round(totalLastFiveScores / lastFiveFixtureAnalyzed))
 
 
 ###################################
@@ -74,13 +80,12 @@ for players_slugs_list in splitted_players_slugs_list:
   ownedPlayers = result.data["nbaPlayers"]
   for player in ownedPlayers:
 
-    lastThreeScores = calculateAverageScore(player["latestThreeScores"])
-    lastFiveScores = calculateAverageScore(player["latestFiveScores"])
+    lastScores = calculateAverageScore(player["latestFinalFixtureStats"])
 
-    nbaPlayerStats = NbaPlayer(player["slug"], player["team"]["name"], player["isActive"], lastThreeScores, lastFiveScores, player["tenGameAverage"])
+    nbaPlayerStats = NbaPlayer(player["slug"], player["team"]["name"], player["isActive"], lastScores[0], lastScores[1], player["tenGameAverage"])
     nbaPlayersStatsList.append(nbaPlayerStats)
 
-active_nba_players_stats_list = filter(lambda nbaPlayer: nbaPlayer.isActive, nbaPlayersStatsList)
+active_nba_players_stats_list = nbaPlayersStatsList#filter(lambda nbaPlayer: nbaPlayer.isActive, nbaPlayersStatsList)
 
 df_players_stats = pd.DataFrame(sorted(active_nba_players_stats_list, reverse=True))
 pd.set_option('display.max_rows', None)
