@@ -44,7 +44,7 @@ NBA_PLAYERS_NAME_OWNED = [
     "Shai Gilgeous-Alexander",
     "Trae Young",
     "Ja Morant",
-    "Bam Adebayo",
+    "Jimmy Butler",
     "Paul George",
     "Jaren Jackson Jr.",
     "Klay Thompson",
