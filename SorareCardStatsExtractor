@@ -30,7 +30,7 @@ def calculateAverageScore(lastScoresList : list) -> tuple :
     totalLastFiveScores += score
     fixtureStatsCounter += 1
 
-  print("total games analyzed: ", len(filterdScoresList), " - last 3 scores: ", totalLastThreeScores, " - last 5 scores: ", totalLastFiveScores)
+  #print("total games analyzed: ", len(filterdScoresList), " - last 3 scores: ", totalLastThreeScores, " - last 5 scores: ", totalLastFiveScores)
 
   lastThreeFixtureAnalyzed = fixtureStatsCounter if fixtureStatsCounter < 3 else 3
   lastFiveFixtureAnalyzed = fixtureStatsCounter if fixtureStatsCounter < 5 else 5
