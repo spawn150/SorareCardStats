@@ -114,5 +114,7 @@ NBA_PLAYERS_NAME_OWNED = [
     "Udoka Azubuike",
     "Grayson Allen",
     "Buddy Hield",
-    "Evan Mobley"
+    "Evan Mobley",
+    "Keegan Murray",
+    "Drew Eubanks"
 ]
