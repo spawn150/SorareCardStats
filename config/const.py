@@ -116,5 +116,6 @@ NBA_PLAYERS_NAME_OWNED = [
     "Buddy Hield",
     "Evan Mobley",
     "Keegan Murray",
-    "Drew Eubanks"
+    "Drew Eubanks",
+    "Onyeka Okongwu"
 ]
