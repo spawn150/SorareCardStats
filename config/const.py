@@ -117,5 +117,7 @@ NBA_PLAYERS_NAME_OWNED = [
     "Evan Mobley",
     "Keegan Murray",
     "Drew Eubanks",
-    "Onyeka Okongwu"
+    "Onyeka Okongwu",
+    "Jeremy Sochan",
+    "RJ Barrett"
 ]
