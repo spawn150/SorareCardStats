@@ -52,7 +52,7 @@ NBA_PLAYERS_NAME_OWNED = [
     "De'Aaron Fox",
     "Scottie Barnes",
     "Stephen Curry",
-    "Zion Williamson",
+    "Donovan Mitchell",
     "Kristaps Porzingis",
     "Dejounte Murray",
     "Nic Claxton",
@@ -119,5 +119,9 @@ NBA_PLAYERS_NAME_OWNED = [
     "Drew Eubanks",
     "Onyeka Okongwu",
     "Jeremy Sochan",
-    "RJ Barrett"
+    "RJ Barrett",
+    "Fred VanVleet",
+    "Jakob Poeltl",
+    "Kendall Brown",
+    "Jaden Ivey"
 ]
