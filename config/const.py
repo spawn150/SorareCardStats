@@ -123,5 +123,8 @@ NBA_PLAYERS_NAME_OWNED = [
     "Fred VanVleet",
     "Jakob Poeltl",
     "Kendall Brown",
-    "Jaden Ivey"
+    "Jaden Ivey",
+    "Nikola Jokić",
+    "Walker Kessler",
+    "CJ McCollum"
 ]
