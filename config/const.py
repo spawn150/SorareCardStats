@@ -126,5 +126,8 @@ NBA_PLAYERS_NAME_OWNED = [
     "Jaden Ivey",
     "Nikola Jokić",
     "Walker Kessler",
-    "CJ McCollum"
+    "CJ McCollum",
+    "Franz Wagner",
+    "Zach Lavine",
+    "Bradley Beal"
 ]
