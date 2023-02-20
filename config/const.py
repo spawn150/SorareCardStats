@@ -129,5 +129,8 @@ NBA_PLAYERS_NAME_OWNED = [
     "CJ McCollum",
     "Franz Wagner",
     "Zach Lavine",
-    "Bradley Beal"
+    "Bradley Beal",
+    "Killian Hayes",
+    "Royce O'Neale",
+    "Kevin Love"
 ]
