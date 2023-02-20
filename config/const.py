@@ -132,5 +132,7 @@ NBA_PLAYERS_NAME_OWNED = [
     "Bradley Beal",
     "Killian Hayes",
     "Royce O'Neale",
-    "Kevin Love"
+    "Kevin Love",
+    "Alperen Sengun",
+    "LeBron James"
 ]
