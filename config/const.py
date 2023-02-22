@@ -43,7 +43,7 @@ NBA_PLAYERS_NAME_OWNED = [
     "Nikola Vučević",
     "Shai Gilgeous-Alexander",
     "Trae Young",
-    "Ja Morant",
+    "Devin Booker",
     "Jimmy Butler",
     "Paul George",
     "Jaren Jackson Jr.",
